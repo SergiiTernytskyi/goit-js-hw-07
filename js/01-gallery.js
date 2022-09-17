@@ -15,10 +15,13 @@ galleryRef.innerHTML += galleryItemDivMarkupString;
 
 let instance;
 
-galleryRef.addEventListener('click', onGalleryItemClick);
+galleryRef.addEventListener('click', onGalleryItemOpen);
 
-function onGalleryItemClick(event) {
+function onGalleryItemOpen(event) {
   event.preventDefault();
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
   window.addEventListener('keydown', onGalleryItemClose);
 
   instance = basicLightbox.create(`
