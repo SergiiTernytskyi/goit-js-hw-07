@@ -16,3 +16,5 @@ let gallery = new SimpleLightbox('.gallery__item', {
   captionDelay: 250,
   captionsData: 'alt',
 });
+
+console.log(gallery);

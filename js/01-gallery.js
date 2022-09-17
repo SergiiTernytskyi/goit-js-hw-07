@@ -24,13 +24,17 @@ function onGalleryItemOpen(event) {
   }
   window.addEventListener('keydown', onGalleryItemClose);
 
-  instance = basicLightbox.create(`
+  (instance = basicLightbox.create(`
     <img src="${event.target.dataset.source}" width="1280" height="auto">
-`);
+`)),
+    {
+      closable: true,
+    };
   instance.show();
 }
 
 function onGalleryItemClose(event) {
+  console.log(event.code);
   if (event.code === 'Escape') {
     instance.close(() => console.log('lightbox not visible anymore'));
     window.removeEventListener('keydown', onGalleryItemClose);
