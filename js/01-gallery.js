@@ -24,12 +24,17 @@ function onGalleryItemOpen(event) {
   }
   window.addEventListener('keydown', onGalleryItemClose);
 
-  (instance = basicLightbox.create(`
+  instance = basicLightbox.create(
+    `
     <img src="${event.target.dataset.source}" width="1280" height="auto">
-`)),
+`,
     {
       closable: true,
-    };
+      onClose: instance => {
+        window.removeEventListener('keydown', onGalleryItemClose);
+      },
+    }
+  );
   instance.show();
 }
 
