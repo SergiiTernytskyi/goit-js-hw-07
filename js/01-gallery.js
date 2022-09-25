@@ -11,18 +11,17 @@ const galleryItemDivMarkup = galleryItems.map(({ preview, original, description 
 
 const galleryItemDivMarkupString = galleryItemDivMarkup.join('');
 
-galleryRef.innerHTML += galleryItemDivMarkupString;
-
-let instance;
+galleryRef.insertAdjacentHTML('beforeend', galleryItemDivMarkupString);
 
 galleryRef.addEventListener('click', onGalleryItemOpen);
+
+let instance;
 
 function onGalleryItemOpen(event) {
   event.preventDefault();
   if (event.target.nodeName !== 'IMG') {
     return;
   }
-  window.addEventListener('keydown', onGalleryItemClose);
 
   instance = basicLightbox.create(
     `
@@ -30,11 +29,15 @@ function onGalleryItemOpen(event) {
 `,
     {
       closable: true,
+      onShow: instance => {
+        window.addEventListener('keydown', onGalleryItemClose);
+      },
       onClose: instance => {
         window.removeEventListener('keydown', onGalleryItemClose);
       },
     }
   );
+
   instance.show();
 }
 
@@ -42,6 +45,5 @@ function onGalleryItemClose(event) {
   console.log(event.code);
   if (event.code === 'Escape') {
     instance.close(() => console.log('lightbox not visible anymore'));
-    window.removeEventListener('keydown', onGalleryItemClose);
   }
 }
